@@ -8,8 +8,8 @@
     "start": "nodemon index.js"
   },
   "jest": {
-		"testEnvironment": "node"
-	},
+    "testEnvironment": "node"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/safe-space-lambda/Backend-eileen.git"
