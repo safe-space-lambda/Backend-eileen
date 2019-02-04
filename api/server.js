@@ -19,15 +19,15 @@ server.post('/api/register/', async (req, res) => {
 
                 res.status(201).json(ids);
             } catch (err) {
-                res.status(500).json({ error: `Couldn't register this user. Please use a unique username.` })
+                res.status(403).json({ error: `Couldn't register this user. Please use a unique username.` })
             }
         } else {
-            res.status(500).json({
+            res.status(403).json({
                 error: `Make sure to include a username and your name!`
             })
         }
     } else {
-        res.status(500).json({
+        res.status(403).json({
             error: `Please include a password for registration.`
         });
     }
