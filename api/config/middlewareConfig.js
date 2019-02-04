@@ -7,5 +7,7 @@ module.exports = server => {
     server.use(helmet());
     server.use(morgan('short'));
     server.use(express.json());
-    server.use(cors());
+    server.use(cors({ 
+        credentials: true, origin: process.env.PORT || 'http://localhost:5000'
+    }));
 }
