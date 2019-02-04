@@ -31,6 +31,31 @@ server.post('/api/register/', async (req, res) => {
             error: `Please include a password for registration.`
         });
     }
-})
+});
+
+server.post('/api/login', async (req, res) => {
+    const creds = req.body;
+
+    if (creds.username) {
+        if (creds.password) {
+            let response = await helpers.beginLogin(creds);
+
+            if (!response || !bcrypt.compareSync(creds.password, response.password)) {
+                res.status(401).json({ message: `Invalid username or password.` });
+            } else {
+                const token = helpers.generateToken(response);
+                res.status(200).json(token);
+            }
+        } else {
+            res.status(403).json({
+                error: `Please include a password.`
+            });
+        }
+    } else {
+        res.status(403).json({
+            error: `Please include a username.`
+        })
+    }
+});
 
 module.exports = server;
