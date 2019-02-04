@@ -38,12 +38,46 @@ describe('server.js tests', () => {
         });
         
         it('should return an array of ids and status code of 201 on successful registration', async () => {
-            const testUser = { username: 'test', password: 'test', name: 'tester' };
+            const testUser = { username: 'test2', password: 'test', name: 'tester' };
 
             let response = await request(server).post('/api/register/').send(testUser);
 
-            expect(response.body).toEqual([1]);
+            expect(response.body).toEqual([2]);
             expect(response.status).toBe(201);
         });
     });
+
+    describe('POST /api/login endpoint', () => {
+        it('should return an error if username was not suppied', async () => {
+            const noUsername = { password: 'test'};
+
+            let response = await request(server).post('/api/login').send(noUsername);
+
+            expect(response.body).toEqual({ error: `Please include a username.` });
+        });
+
+        it('should return an error if no password was supplied', async () => {
+            const noPassword = { username: 'test'};
+
+            let response = await request(server).post('/api/login').send(noPassword);
+
+            expect(response.body).toEqual({ error: `Please include a password.` });
+        });
+
+        it('should return an error if username or password is incorrect', async () => {
+            const wrongCreds = { username: 'test', password:'test123' };
+
+            let response = await request(server).post('/api/login').send(wrongCreds);
+
+            expect(response.body).toEqual({  message: `Invalid username or password.` });
+        });
+
+        it('should return a status code of 200 if login successful', async () => {
+            const creds = { username: 'test', password: 'test' };
+
+            let response = await request(server).post('/api/login').send(creds);
+
+            expect(response.status).toBe(200);
+        });
+    })
 });
