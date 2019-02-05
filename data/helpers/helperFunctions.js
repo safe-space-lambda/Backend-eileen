@@ -50,6 +50,10 @@ const deleteUser = userId => {
         .delete(userId);
 }
 
+const createMessage = message => {
+    return db('messages').insert(message);
+}
+
 module.exports = {
     getUsers, 
     getUserById, 
@@ -57,5 +61,6 @@ module.exports = {
     beginLogin, 
     register,
     updateUser,
-    deleteUser
+    deleteUser,
+    createMessage,
 }
