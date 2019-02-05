@@ -8,6 +8,6 @@ module.exports = server => {
     server.use(morgan('short'));
     server.use(express.json());
     server.use(cors({ 
-        credentials: true, origin: process.env.PORT || 'http://localhost:5000'
+        credentials: true, origin: true
     }));
 }
