@@ -6,11 +6,11 @@ const jwt = require('jsonwebtoken');
 const db = knex(knexConfig.development);
 
 const getUsers = () => {
-    return db('users');
+    return db('users').select('id', 'username', 'name');
 }
 
 const getUserById = id => {
-    return db('users').where({ id: id });
+    return db('users').where({ id: id }).select('id', 'username', 'name');
 }
 
 const beginLogin = creds => {
