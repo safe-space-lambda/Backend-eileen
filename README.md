@@ -32,30 +32,6 @@ https://lambda-safe-space.herokuapp.com/
 
 ### User Registration
 
-Method used: **[POST]** `/api/login/`
-
-On Success: Returns the Id of the new user.
-
-
-
-Parameters:
-
-|  Name  | Type | Required |
-|--------|------|----------|
-|username|string|    yes   |
-|password|string|    yes   |
-
-Example: 
-```
-{
-    username: "JohnDoe",
-    password: "testpassword"
-}
-```
-
----
-
-### User Login
 
 Method used: **[POST]** `/api/register/`
 
@@ -76,6 +52,31 @@ Example:
 ```
 {
     name: "John"
+    username: "JohnDoe",
+    password: "testpassword"
+}
+```
+---
+
+### User Login
+
+
+Method used: **[POST]** `/api/login/`
+
+On Success: Returns the Id of the new user.
+
+
+
+Parameters:
+
+|  Name  | Type | Required |
+|--------|------|----------|
+|username|string|    yes   |
+|password|string|    yes   |
+
+Example: 
+```
+{
     username: "JohnDoe",
     password: "testpassword"
 }
