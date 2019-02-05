@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const helpers = require('../../data/helpers/helperFunctions');
 const restricted = require('../middleware/restricted');
-const restrictedByUser = require('../middleware/restrictedByUser');
+const userRestriction = require('../middleware/restrictedByUser');
 
 const router = express.Router();
 
@@ -91,7 +91,7 @@ router.get('/users/:id/', restricted, async (req, res) => {
     }
 });
 
-router.put('/users/:id/', restrictedByUser, async (req, res) => {
+router.put('/users/:id/', userRestriction, async (req, res) => {
     try {
         let response = await helpers.updateUser(req.params.id, req.body);
 
@@ -103,7 +103,7 @@ router.put('/users/:id/', restrictedByUser, async (req, res) => {
     }
 });
 
-router.delete('/users/:id/', restrictedByUser, async(req, res) => {
+router.delete('/users/:id/', userRestriction, async(req, res) => {
     try {
         let response = await helpers.deleteUser(req.params.id);
         
