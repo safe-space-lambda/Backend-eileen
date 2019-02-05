@@ -47,7 +47,7 @@ const deleteUser = userId => {
     return db('users')
         .where({ id: userId })
         .first()
-        .delete(userId);
+        .del();
 }
 
 const createMessage = message => {
@@ -62,8 +62,7 @@ const getMessages = id => {
 
 const getMessageById = id => {
     return db('messages')
-        .where({ id: id })
-        .select('id', 'text');
+        .where({ id: id });
 }
 
 const updateMessage = (id, updatedInfo) => {
@@ -71,6 +70,13 @@ const updateMessage = (id, updatedInfo) => {
         .where({ id: id })
         .first()
         .update(updatedInfo);
+}
+
+const deleteMessage = id => {
+    return db('messages')
+        .where({ id: id })
+        .first()
+        .del();
 }
 
 module.exports = {
@@ -85,4 +91,5 @@ module.exports = {
     getMessages,
     getMessageById,
     updateMessage,
+    deleteMessage,
 }
