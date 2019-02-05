@@ -54,6 +54,14 @@ const createMessage = message => {
     return db('messages').insert(message);
 }
 
+const getMessages = id => {
+    return db('messages').where({ 'user_id': id });
+}
+
+const getMessageById = id => {
+    return db('messages').where({ id: id });
+}
+
 module.exports = {
     getUsers, 
     getUserById, 
@@ -63,4 +71,6 @@ module.exports = {
     updateUser,
     deleteUser,
     createMessage,
+    getMessages,
+    getMessageById,
 }
