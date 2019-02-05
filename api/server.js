@@ -8,5 +8,6 @@ const server = express();
 middleware(server);
 
 server.use('/api/', usersRouter);
+server.use('/api/', messagesRouter);
 
 module.exports = server;
