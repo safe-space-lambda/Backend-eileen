@@ -22,7 +22,7 @@ https://lambda-safe-space.herokuapp.com/
 | Method |     Endpoint    |   Requires   | Description |
 |--------|-----------------|--------------|-------------|
 |  POST  | `/api/register/` | `username`, `name`, `password`| Used for adding a new user to database.                                       |
-|  POST  | `/api/login/`    |     `username`, `password`    | Used to log a user in. Returns a token in its body.                           |
+|  POST  | `/api/login/`    |     `username`, `password`    | Used to log a user in. Returns a token and the user's name in its body.       |
 |  GET   | `/api/users`     |        Successful Login       | Used to show all users in the database.                                       |
 |  GET   | `/api/users/:id/`|        Successful Login       | Used to show a specific user in the database.                                 |
 |  PUT   | `/api/users/:id/`|     Successful Login, Data    | Used to edit the logged in user's credentials. **Only works on current user!**|
@@ -47,7 +47,7 @@ Parameters:
 |username|string|    yes   |Must be unique.                              |
 |password|string|    yes   |Can be any length, but the longer the better.|
 
-Example: 
+Example of what to use: 
 ```
 {
     name: "John"
@@ -62,7 +62,7 @@ Example:
 
 Method used: **[POST]** `/api/login/`
 
-On Success: Returns a token to be used to authenticate the user. Place it wherever you'd like!
+On Success: Returns an object containing a token to be used to authenticate the user and the user's name. Place it wherever you'd like!
 
 
 
@@ -73,7 +73,7 @@ Parameters:
 |username|string|    yes   |
 |password|string|    yes   |
 
-Example: 
+Example of what to use: 
 ```
 {
     username: "JohnDoe",
@@ -173,6 +173,13 @@ Parameters:
 | Authorization |**Header**|    yes   | Acquired from a successful login.           |
 |    `text`     |  string  |    yes   |                                             |
 
+
+Example of what to use:
+```
+{
+	"text": "I'm the best!"
+}
+```
 ---
 
 ### View All Messages
@@ -188,13 +195,27 @@ Parameters:
 |---------------|----------|----------|---------------------------------------------|
 | Authorization |**Header**|    yes   | Acquired from a successful login.           |
 
+Example of array returned:
+```
+[
+    {
+        "id": 1,
+        "text": "I'm sweet!"
+    },
+    {
+        "id": 2,
+        "text": "I'm cool!"
+    }
+]
+```
+
 ---
 
 ### View Specific Message
 
 Method used: **[GET]** `/api/messages/:id/`
 
-On Success: Returns an array containing the message specified in the params if it belongs to the current user.
+On Success: Returns an object containing the message specified in the params if it belongs to the current user.
 
 
 Parameters:
@@ -202,6 +223,15 @@ Parameters:
 |      Name     |   Type   | Required |                   Notes                     |
 |---------------|----------|----------|---------------------------------------------|
 | Authorization |**Header**|    yes   | Acquired from a successful login.           |
+
+
+Example of object returned:
+```
+{
+    "id": 1,
+    "text": "I'm sweet!"
+}
+```
 
 ---
 
