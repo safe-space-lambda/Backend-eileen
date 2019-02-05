@@ -44,7 +44,7 @@ router.post('/login/', async (req, res) => {
                     res.status(401).json({ message: `Invalid username or password.` });
                 } else {
                     const token = helpers.generateToken(response);
-                    res.status(200).json(token);
+                    res.status(200).json({ name: response.name, token: token });
                 }
             } catch (err) {
                 res.status(401).json({ message: `Invalid username or password.` });
