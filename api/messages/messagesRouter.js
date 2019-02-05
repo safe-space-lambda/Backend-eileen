@@ -79,6 +79,24 @@ router.get('/messages/:id/', async (req, res) => {
             error: `Could not get messages at this time.`
         });
     }
-})
+});
 
-module.exports = router;
+router.put('/messages/:id/', async (req, res) => {
+    if (req.body.text && req.body.text.length > 0) {       
+        try {
+            const response = await helpers.updateMessage(req.params.id, req.body);
+            
+            res.status(200).json(response);
+        } catch (err) {
+            res.status(404).json({
+                error: `Couldn't find a message with that Id!`
+            });
+        }
+    } else {
+        res.status(500).json({
+            error: `Please include some text in your message!`
+        })
+    }
+});
+    
+    module.exports = router;
