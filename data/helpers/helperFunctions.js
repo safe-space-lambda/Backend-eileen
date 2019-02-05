@@ -55,11 +55,22 @@ const createMessage = message => {
 }
 
 const getMessages = id => {
-    return db('messages').where({ 'user_id': id });
+    return db('messages')
+        .where({ 'user_id': id })
+        .select('id', 'text');
 }
 
 const getMessageById = id => {
-    return db('messages').where({ id: id });
+    return db('messages')
+        .where({ id: id })
+        .select('id', 'text');
+}
+
+const updateMessage = (id, updatedInfo) => {
+    return db('messages')
+        .where({ id: id })
+        .first()
+        .update(updatedInfo);
 }
 
 module.exports = {
@@ -73,4 +84,5 @@ module.exports = {
     createMessage,
     getMessages,
     getMessageById,
+    updateMessage,
 }
