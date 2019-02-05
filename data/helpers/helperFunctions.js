@@ -9,7 +9,7 @@ const getUsers = () => {
     return db('users');
 }
 
-const getUsersById = id => {
+const getUserById = id => {
     return db('users').where({ id: id });
 }
 
@@ -36,10 +36,26 @@ const generateToken = user => {
     return jwt.sign(payload, secret, options);
 }
 
+const updateUser = (userId, userInfo) => {
+    return db('users')
+        .where({id: userId})
+        .first()
+        .update(userInfo);
+}
+
+const deleteUser = userId => {
+    return db('users')
+        .where({ id: userId })
+        .first()
+        .delete(userId);
+}
+
 module.exports = {
     getUsers, 
-    getUsersById, 
+    getUserById, 
     generateToken, 
     beginLogin, 
     register,
+    updateUser,
+    deleteUser
 }
