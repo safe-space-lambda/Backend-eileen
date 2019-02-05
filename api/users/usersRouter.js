@@ -76,8 +76,14 @@ router.get('/users/', restricted, async (req, res) => {
 router.get('/users/:id/', restricted, async (req, res) => {
     try {
         let response = await helpers.getUserById(req.params.id);
-
-        res.status(200).json(response);
+        
+        if (response.length > 0) {
+            res.status(200).json(response);
+        } else {
+            res.status(404).json({
+                error: `Could not find specified user.`
+            });
+        }
     } catch (err) {
         res.status(500).json({
             error: `Couldn't access user data. Please try again.`
