@@ -35,8 +35,7 @@ https://lambda-safe-space.herokuapp.com/
 
 Method used: **[POST]** `/api/register/`
 
-On Success: Returns a token to be used to authenticate the user. Place it wherever you'd like!
-
+On Success: Returns the Id of the new user.
 
 
 
@@ -63,7 +62,7 @@ Example:
 
 Method used: **[POST]** `/api/login/`
 
-On Success: Returns the Id of the new user.
+On Success: Returns a token to be used to authenticate the user. Place it wherever you'd like!
 
 
 
@@ -137,6 +136,96 @@ Parameters:
 Method used: **[DELETE]** `/api/users/:id/`
 
 On Success: Returns `1`.
+
+
+Parameters:
+
+|      Name     |   Type   | Required |                   Notes                     |
+|---------------|----------|----------|---------------------------------------------|
+| Authorization |**Header**|    yes   | Acquired from a successful login.           |
+
+---
+
+### Messages Overview
+
+
+| Method |          Endpoint          |         Requires        |                                           Description                                          |
+|--------|----------------------------|-------------------------|------------------------------------------------------------------------------------------------|
+|  POST  | `/api/users/:id/messages/` | Successful Login, `text` | Used for adding a new message to the database. **Only adds for current user!**                |
+|  GET   | `/api/users/:id/messages/` |      Successful Login    | Used to show all messages in the database. **Only shows messages for current user!**          |
+|  GET   |    `/api/messages/:id/`    |      Successful Login    | Used to show a specific message in the database. **Only works on messages for current user!** |
+|  PUT   |    `/api/messages/:id/`    | Successful Login, `text` | Used to edit a specific message. **Only works on current user!**                              |
+| DELETE |    `/api/messages/:id/`    |      Successful Login    | Used to delete a specific message. **Only works on current user!**                            |
+
+---
+
+### Add Message
+
+Method used: **[POST]** `/api/users/:id/messages/`
+
+On Success: Returns the Id of the new message.
+
+
+Parameters:
+
+|      Name     |   Type   | Required |                   Notes                     |
+|---------------|----------|----------|---------------------------------------------|
+| Authorization |**Header**|    yes   | Acquired from a successful login.           |
+|    `text`     |  string  |    yes   |                                             |
+
+---
+
+### View All Messages
+
+Method used: **[GET]** `/api/users/:id/messages/`
+
+On Success: Returns an array containing all messages related to the current user.
+
+
+Parameters:
+
+|      Name     |   Type   | Required |                   Notes                     |
+|---------------|----------|----------|---------------------------------------------|
+| Authorization |**Header**|    yes   | Acquired from a successful login.           |
+
+---
+
+### View Specific Message
+
+Method used: **[GET]** `/api/messages/:id/`
+
+On Success: Returns an array containing the message specified in the params if it belongs to the current user.
+
+
+Parameters:
+
+|      Name     |   Type   | Required |                   Notes                     |
+|---------------|----------|----------|---------------------------------------------|
+| Authorization |**Header**|    yes   | Acquired from a successful login.           |
+
+---
+
+### Edit Specific Message
+
+Method used: **[PUT]** `/api/messages/:id/`
+
+On Success: Returns `1` if the message has been updated **and** belongs to the current user. Otherwise, nothing changes.
+
+
+Parameters:
+
+|      Name     |   Type   | Required |                   Notes                     |
+|---------------|----------|----------|---------------------------------------------|
+| Authorization |**Header**|    yes   | Acquired from a successful login.           |
+|    `text`     |  string  |    yes   |                                             |
+
+---
+
+### Delete Specific Message
+
+Method used: **[DELETE]** `/api/messages/:id/`
+
+On Success: Returns `1` if the message has been deleted **and** belonged to the current user. Otherwise, nothing changes.
 
 
 Parameters:
