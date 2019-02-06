@@ -19,14 +19,14 @@ https://lambda-safe-space.herokuapp.com/
 ### Users Overview
 
 
-| Method |     Endpoint    |   Requires   | Description |
-|--------|-----------------|--------------|-------------|
-|  POST  | `/api/register/` | `username`, `name`, `password`| Used for adding a new user to database.                                       |
-|  POST  | `/api/login/`    |     `username`, `password`    | Used to log a user in. Returns a token and the user's name in its body.       |
-|  GET   | `/api/users`     |        Successful Login       | Used to show all users in the database.                                       |
-|  GET   | `/api/users/:id/`|        Successful Login       | Used to show a specific user in the database.                                 |
-|  PUT   | `/api/users/:id/`|     Successful Login, Data    | Used to edit the logged in user's credentials. **Only works on current user!**|
-| DELETE | `api/users/:id/` |        Successful Login       | Used to delete the logged in user. **Only works on current user!**            |
+| Method |     Endpoint     |                  Requires                    |                                        Description                            |
+|--------|------------------|----------------------------------------------|-------------------------------------------------------------------------------|
+|  POST  | `/api/register/` | `username`, `name`, `password`, `phoneNumber`| Used for adding a new user to database.                                       |
+|  POST  | `/api/login/`    |            `username`, `password`            | Used to log a user in. Returns a token and the user's name in its body.       |
+|  GET   | `/api/users`     |              Successful Login                | Used to show all users in the database.                                       |
+|  GET   | `/api/users/:id/`|              Successful Login                | Used to show a specific user in the database.                                 |
+|  PUT   | `/api/users/:id/`|            Successful Login, Data            | Used to edit the logged in user's credentials. **Only works on current user!**|
+| DELETE | `api/users/:id/` |              Successful Login                | Used to delete the logged in user. **Only works on current user!**            |
 
 ---
 
@@ -41,18 +41,20 @@ On Success: Returns the Id of the new user.
 
 Parameters:
 
-|  Name  | Type | Required |                   Notes                     |
-|--------|------|----------|---------------------------------------------|
-|  name  |string|    yes   |The name the user wishes to go by.           |
-|username|string|    yes   |Must be unique.                              |
-|password|string|    yes   |Can be any length, but the longer the better.|
+|   Name    | Type | Required |                      Notes                       |
+|-----------|------|----------|--------------------------------------------------|
+|   name    |string|    yes   |The name the user wishes to go by.                |
+| username  |string|    yes   |Must be unique.                                   |
+| password  |string|    yes   |Can be any length, but the longer the better.     |
+|phoneNumber|string|    yes   |Should include the country code. _e.g. 1 for U.S._|
 
 Example of what to use: 
 ```
 {
     name: "John"
     username: "JohnDoe",
-    password: "testpassword"
+    password: "testpassword",
+    phoneNumber: "18002345678"
 }
 ```
 ---
