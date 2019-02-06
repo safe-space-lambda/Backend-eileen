@@ -12,6 +12,10 @@ exports.up = function(knex, Promise) {
       table
         .string('password', 255)
         .notNullable();
+      table
+        .string('phoneNumber', 128)
+        .notNullable()
+        .unique('uq_users_phoneNumber');
   })
 };
 
