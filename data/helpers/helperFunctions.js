@@ -47,7 +47,36 @@ const deleteUser = userId => {
     return db('users')
         .where({ id: userId })
         .first()
-        .delete(userId);
+        .del();
+}
+
+const createMessage = message => {
+    return db('messages').insert(message);
+}
+
+const getMessages = id => {
+    return db('messages')
+        .where({ 'user_id': id })
+        .select('id', 'text');
+}
+
+const getMessageById = id => {
+    return db('messages')
+        .where({ id: id });
+}
+
+const updateMessage = (id, updatedInfo) => {
+    return db('messages')
+        .where({ id: id })
+        .first()
+        .update(updatedInfo);
+}
+
+const deleteMessage = id => {
+    return db('messages')
+        .where({ id: id })
+        .first()
+        .del();
 }
 
 module.exports = {
@@ -57,5 +86,10 @@ module.exports = {
     beginLogin, 
     register,
     updateUser,
-    deleteUser
+    deleteUser,
+    createMessage,
+    getMessages,
+    getMessageById,
+    updateMessage,
+    deleteMessage,
 }
