@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const helpers = require('../../data/helpers/helperFunctions');
 const restricted = require('../middleware/restricted');
 const userRestriction = require('../middleware/restrictedByUser');
@@ -8,17 +10,26 @@ const router = express.Router();
 
 router.post('/register/', async (req, res) => {
     const userInfo = req.body;
+    const cipher = crypto.createCipher(process.env.ALGO, Buffer.alloc(32), Buffer.alloc(16));
     
     if (userInfo.password) {
         if (userInfo.username && userInfo.name) {
-            userInfo.password = bcrypt.hashSync(userInfo.password, 16);
-            
-            try {
-                const ids = await helpers.register(userInfo);
+            if (userInfo.phoneNumber) {
+                userInfo.password = bcrypt.hashSync(userInfo.password, 16);
+                userInfo.phoneNumber = cipher.update(userInfo.phoneNumber, 'utf8', 'hex');
+                userInfo.phoneNumber += cipher.final('hex');
 
-                res.status(201).json(ids);
-            } catch (err) {
-                res.status(403).json({ error: `Couldn't register this user. Please use a unique username.` })
+                try {
+                    const ids = await helpers.register(userInfo);
+                    
+                    res.status(201).json(ids);
+                } catch (err) {
+                    res.status(403).json({ error: `Couldn't register this user. Please use a unique username.` })
+                }
+            } else {
+                res.status(403).json({
+                    error: `Make sure to include a phone number!`
+                })
             }
         } else {
             res.status(403).json({
