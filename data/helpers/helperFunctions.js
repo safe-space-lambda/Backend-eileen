@@ -13,6 +13,10 @@ const getUserById = id => {
     return db('users').where({ id: id }).select('id', 'username', 'name');
 }
 
+const userByIdWithAllData = id => {
+    return db('users').where({ id: id });
+}
+
 const beginLogin = creds => {
     return db('users').where({ 'username': creds.username }).first();
 }
@@ -82,6 +86,7 @@ const deleteMessage = id => {
 module.exports = {
     getUsers, 
     getUserById, 
+    userByIdWithAllData,
     generateToken, 
     beginLogin, 
     register,
