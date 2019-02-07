@@ -6,27 +6,30 @@ const crypto = require('crypto');
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
-const decipher =  crypto.createDecipheriv(process.env.ALGO, Buffer.alloc(24), Buffer.alloc(16));
 
 const scheduler = () => {
-    return cron.schedule('0 10 * * *', async () => {
+    return cron.schedule('5 * * * *', async () => {
         try {
             const totalUsers = await helpers.getUsers();
 
             for (let i = 0; i < totalUsers.length; i++){
                 try {
-                    const user = await helpers.getUserById(totalUsers[i].id);
+                    const user = await helpers.userByIdWithAllData(totalUsers[i].id);
         
                     if (user.length > 0) {
                         try {
                             const messages = await helpers.getMessages(i);
         
                             if (messages.length > 0 ) {
+                                let decipher =  crypto.createDecipher(process.env.ALGO, Buffer.alloc(32), Buffer.alloc(16));
+                                let decryptedPhone = decipher.update(user[0].phoneNumber, 'hex', 'utf8')
+                                decryptedPhone += decipher.final('utf8');
+
                                 const text = messages.map(message => (message.text));
 
                                 let response = await client.messages.create({
                                     body: `Hi, ${user[0].name}! Here are some cool things about yourself:\n ${text.join(', ')}`,
-                                    to: decipher.update(user[0].phoneNumber, 'hex', 'utf-8') || process.env.TESTPHONE2, // Text this number
+                                    to: decryptedPhone, // Text this number
                                     from: process.env.TWILIOPHONE // From a valid Twilio number
                                     });
                                 console.log('message sent!')
@@ -48,12 +51,6 @@ const scheduler = () => {
                 console.log(err)
             }// try getUsers
         })
-    // await client.messages.create({
-    //     body: `Test text!`,
-    //     to: '+13476748038',  // Text this number
-    //     from: process.env.TWILIOPHONE // From a valid Twilio number
-    // });
-        console.log('Cron is working as intended!');
 }
 
 module.exports = scheduler;
