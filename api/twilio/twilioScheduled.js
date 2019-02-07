@@ -28,8 +28,8 @@ const scheduler = () => {
                                 const text = messages.map(message => (message.text));
 
                                 let response = await client.messages.create({
-                                    body: `Hi, ${user[0].name}! Here are some cool things about yourself:\n ${text.join(', ')}`,
-                                    to: decryptedPhone, // Text this number
+                                    body: `Hi, ${user[0].name}! \nRemember, you are loved!\n Here are the best things about yourself:\n ${text.join(', ')}`,
+                                    to: `+${decryptedPhone}`, // Text this number
                                     from: process.env.TWILIOPHONE // From a valid Twilio number
                                     });
                                 console.log('message sent!')
