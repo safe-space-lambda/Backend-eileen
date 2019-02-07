@@ -32,7 +32,7 @@ exports.seed = function(knex, Promise) {
           phoneNumber: testphone2
         },
         {
-          name: 'Rebecca', 
+          name: 'Lenna', 
           username: 'tester',  
           password: bcrypt.hashSync('test1', 16),
           phoneNumber: testphone3
