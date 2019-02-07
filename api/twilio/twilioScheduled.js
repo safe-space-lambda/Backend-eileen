@@ -5,7 +5,7 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 
-const scheduler = () => {
+const scheduler = async () => {
         try {
             const totalUsers = await helpers.getUsers();
 
