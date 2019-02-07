@@ -2,13 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const helpers = require('../../data/helpers/helperFunctions');
+const crypto = require('crypto');
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 const decipher =  crypto.createDecipheriv(process.env.ALGO, Buffer.alloc(24), Buffer.alloc(16));
 
 const scheduler = () => {
-    return cron.schedule('0 8,17 * * *', async () => {
+    return cron.schedule('0 10 * * *', async () => {
         try {
             const totalUsers = await helpers.getUsers();
 
