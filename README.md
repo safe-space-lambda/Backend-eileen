@@ -2,6 +2,10 @@
 
 A Backend for Lambda's Safe Space app. Now on Heroku!
 
+Imagine a chat bot that’s on your side in the fight for mental health! Safespace is an app that will send you messages throughout the day to remind you that you are loved.
+
+This backend will allow users to register and submit messages that will automatically be sent out as a text message to the user via Twilio integration.
+
 ## Getting Started
 
 The API can be found at the following url:
@@ -265,3 +269,21 @@ Parameters:
 |      Name     |   Type   | Required |                   Notes                     |
 |---------------|----------|----------|---------------------------------------------|
 | Authorization |**Header**|    yes   | Acquired from a successful login.           |
+
+---
+
+### Twilio Testing
+
+For testing purposes, a Twilio endpoint has been included in the code.
+
+Method used: **[POST]** `/api/twilio/`
+
+On Success: Sends a text message with the messages of a specified user to a phone number provided via ENV.
+
+
+
+Parameters:
+
+|   Name    | Type | Required |                      Notes                        |
+|-----------|------|----------|---------------------------------------------------|
+|    id     |string|    yes   |The id of the user whose messages you wish to send.|
